@@ -2,8 +2,8 @@ import functools
 import operator
 
 
-def find_common_items(bags):
-    return set(set(bags[0]) & set(bags[1]) & set(bags[2])).pop()
+def find_common_items(bags_to_search):
+    return set(set(bags_to_search[0]) & set(bags_to_search[1]) & set(bags_to_search[2])).pop()
 
 
 def find_duplicate_items(bag):
@@ -14,10 +14,11 @@ def find_duplicate_items(bag):
 
 def get_item_priority(item):
     ordinal = ord(item)
-    if ordinal >= 97:
+
+    if item.islower():
         return ordinal - 96
 
-    if ordinal >= 65:
+    if item.isupper():
         return ordinal - 38
 
     exit(1)
@@ -26,18 +27,17 @@ def get_item_priority(item):
 if __name__ == '__main__':
     dups = []
     with open('input_day3.txt') as f:
-        bags = f.readlines()
+        bags = f.read().splitlines()
     f.close()
 
-    #get the sum of the bag priority
-    [dups.append(find_duplicate_items(bag.strip())) for bag in bags]
+    [dups.append(find_duplicate_items(bag)) for bag in bags]
     sum_of_priority = functools.reduce(operator.add, map(get_item_priority, dups))
     print(sum_of_priority)
 
-    bps = []
+    badge_priorities = []
     for n in range(0, len(bags), 3):
-        b = bags[n].strip(), bags[n+1].strip(), bags[n+2].strip()
-        bps.append(get_item_priority(find_common_items(b)))
+        badge_priorities.append(get_item_priority(find_common_items([bags[n], bags[n+1], bags[n+2]])))
 
-    sum_of_bage_priority = functools.reduce(operator.add, bps)
+    sum_of_bage_priority = functools.reduce(operator.add, badge_priorities)
+
     print(sum_of_bage_priority)
