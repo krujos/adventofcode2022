@@ -13,30 +13,18 @@ def find_duplicate_items(bag):
 
 
 def get_item_priority(item):
-    ordinal = ord(item)
-
-    if item.islower():
-        return ordinal - 96
-
-    if item.isupper():
-        return ordinal - 38
-
-    exit(1)
+    return ord(item) - 96 if item.islower() else ord(item) - 38
 
 
 if __name__ == '__main__':
-    dups = []
     with open('input_day3.txt') as f:
         bags = f.read().splitlines()
     f.close()
 
-    [dups.append(find_duplicate_items(bag)) for bag in bags]
-    sum_of_priority = functools.reduce(operator.add, map(get_item_priority, dups))
-    print(sum_of_priority)
+    print(sum(map(get_item_priority, list(map(find_duplicate_items, bags)))))
 
     badge_priorities = []
     for n in range(0, len(bags), 3):
         badge_priorities.append(get_item_priority(find_common_items([bags[n], bags[n+1], bags[n+2]])))
 
-    sum_of_badge_priority = functools.reduce(operator.add, badge_priorities)
-    print(sum_of_badge_priority)
+    print(sum(badge_priorities))
