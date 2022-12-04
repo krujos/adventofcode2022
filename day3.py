@@ -38,6 +38,5 @@ if __name__ == '__main__':
     for n in range(0, len(bags), 3):
         badge_priorities.append(get_item_priority(find_common_items([bags[n], bags[n+1], bags[n+2]])))
 
-    sum_of_bage_priority = functools.reduce(operator.add, badge_priorities)
-
-    print(sum_of_bage_priority)
+    sum_of_badge_priority = functools.reduce(operator.add, badge_priorities)
+    print(sum_of_badge_priority)
