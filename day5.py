@@ -22,9 +22,11 @@ if __name__ == '__main__':
         num = int(instruction[1])
         f = int(instruction[3])-1
         t = int(instruction[5])-1
+        length = len(containers[f])
 
-        for n in range(num):
-            containers[t].append(containers[f].pop())
+        for i, v in enumerate(containers[f][length-num:length]):
+            containers[t].append(v)
+        containers[f] = containers[f][0:length-num]
 
     for r in containers:
         print(r)
