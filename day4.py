@@ -11,19 +11,16 @@ def has_full_overlap(elf1, elf2):
 
 
 def make_elf(proposed_elf):
-    t = proposed_elf.split("-")
-    if int(t[0]) == int(t[1]):
-        return [int(t[0])]
-    r = range(int(t[0]), int(t[1]))
-    return [*r, int(t[1])]
+    start, end = map(eval, proposed_elf.split("-"))
+    return [start] if start == end else [*range(start, end), end]
 
 
 if __name__ == '__main__':
     with open('input_day4.txt') as f:
         pairs = f.read().splitlines()
     f.close()
-    full_overlaps = 0
     any_overlaps = 0
+    full_overlaps = 0
 
     for pair in pairs:
         elf1, elf2 = map(make_elf, pair.split(","))
