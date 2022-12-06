@@ -1,11 +1,11 @@
-def find(buffer):
-    last_seen = {}
-    possible = 0
+def find(buffer, len_to_find):
 
     for i, v in enumerate(buffer):
-        s = {v, buffer[i+1], buffer[i+2], buffer[i+3]}
-        if 4 == len(s):
-            print(i+4)
+        s = set()
+        for r in range(len_to_find):
+            s.add(buffer[r+i])
+        if len_to_find == len(s):
+            print(i+len_to_find)
             return
 
 
@@ -14,4 +14,5 @@ if __name__ == '__main__':
         b = f.read().splitlines()
     f.close()
 
-    find(b[0])
+    find(b[0],4)
+    find(b[0],14)
