@@ -64,6 +64,18 @@ def get_size_under(d, under, dirs):
 
     return dirs
 
+def get_size_over(d, target, dirs):
+    if dirs is None:
+        dirs = list()
+
+    if d.size >= target:
+        dirs.append(d.size)
+
+    for c in d.children:
+        get_size_over(c, target, dirs)
+
+    return dirs
+
 def run():
     root = Directory(name="/", parent=None)
     curdir = root
@@ -78,7 +90,13 @@ def run():
             set_size(b, i, curdir)
 
     small_dirs = get_size_under(root, 100000, None)
-    print(sum(small_dirs))
+    print("sum of smalls", sum(small_dirs))
+
+    avail_space = 70000000 - root.size
+    needed_space = 30000000 - avail_space
+    possible_to_delete = get_size_over(root, needed_space, None)
+    possible_to_delete.sort()
+    print(possible_to_delete[0])
 
 if __name__ == '__main__':
   run()
