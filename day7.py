@@ -1,3 +1,6 @@
+import operator
+
+
 class Directory:
 
     def __init__(self, name, parent):
@@ -53,26 +56,20 @@ def set_size(buffer, idx, curdir):
 
 
 def get_size_under(d, under, dirs):
-    if dirs is None:
-        dirs = list()
-
-    if d.size <= under:
-        dirs.append(d.size)
-
-    for c in d.children:
-        get_size_under(c, under, dirs)
-
-    return dirs
+    return get_size_op(d, under, operator.le, dirs)
 
 def get_size_over(d, target, dirs):
+    return get_size_op(d, target, operator.ge, dirs)
+
+def get_size_op(d, target, operator, dirs):
     if dirs is None:
         dirs = list()
 
-    if d.size >= target:
+    if operator(d.size, target):
         dirs.append(d.size)
 
     for c in d.children:
-        get_size_over(c, target, dirs)
+        get_size_op(c, target, operator, dirs)
 
     return dirs
 
