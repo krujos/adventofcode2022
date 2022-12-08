@@ -12,10 +12,12 @@ class Directory:
 def is_command(buffer):
     return buffer[0] == '$'
 
+
 def get_root(dir):
     if dir.parent is None:
         return dir
     return get_root(dir.parent)
+
 
 def cd(line, curdir):
     dir_name = line[4:].strip()
