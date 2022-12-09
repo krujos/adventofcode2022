@@ -20,6 +20,7 @@ def see_the_trees(grid):
   trees = set()
   number_of_rows = len(grid)
   number_of_columns = len(grid[0])
+  end_of_row = number_of_columns - 1
 
   #Walk the rows
   for x in range(number_of_rows):
@@ -30,7 +31,6 @@ def see_the_trees(grid):
         largest_tree = grid[x][y]
         add_to_set(trees, x, y)
 
-    end_of_row = number_of_columns -1
     largest_tree = grid[x][end_of_row]
     add_to_set(trees, x, end_of_row)
     for y in reversed(range(number_of_columns)):
@@ -47,7 +47,7 @@ def see_the_trees(grid):
         largest_tree = grid[x][y]
         add_to_set(trees, x, y)
 
-    largest_tree = grid[number_of_rows -1 ][y]
+    largest_tree = grid[number_of_rows -1][y]
     add_to_set(trees, number_of_columns -1, y)
     for x in reversed(range(number_of_rows)):
       if grid[x][y] > largest_tree:
@@ -62,8 +62,8 @@ def run():
     b = f.read().splitlines()
   f.close()
 
-  #grid = build_grid(b)
-  grid = build_grid(None)
+  grid = build_grid(b)
+  #grid = build_grid(None)
 
   # for row in grid:
   #   print(row)
