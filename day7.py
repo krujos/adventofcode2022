@@ -2,7 +2,6 @@ import operator
 
 
 class Directory:
-
     def __init__(self, name, parent):
         self.size = 0
         self.parent = parent
