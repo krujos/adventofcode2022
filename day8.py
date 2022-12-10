@@ -57,21 +57,70 @@ def see_the_trees(grid):
   return trees
 
 
+def compute_site_lines(trees, grid):
+  sight_lines=list()
+  max_x = len(grid[0])-1
+  max_y = len(grid)-1
+
+  for tree in trees:
+    tx,ty = tree.split(",")
+    tree_x = int(tx)
+    tree_y = int(ty)
+    height = grid[tree_x][tree_y]
+    right,left,up,down = 0,0,0,0
+
+    if tree_x == 0 or tree_y == 0:
+      sight_lines.append(0)
+      continue
+
+    grid_width = len(grid[0])
+    grid_height = len(grid)
+
+    for y in range(tree_y+1, grid_width):
+      if grid[tree_x][y] < height:
+        right+=1
+      if grid[tree_x][y] >= height:
+        right += 1
+        break
+
+    for y in reversed(range(0, tree_y)):
+      if grid[tree_x][y] < height:
+        left += 1
+      if grid[tree_x][y] >= height:
+        left += 1
+        break
+
+    for x in reversed(range(0, tree_x)):
+      if grid[x][tree_y] < height:
+        up += 1
+      if grid[x][tree_y] >= height:
+        up += 1
+        break
+
+    for x in range(tree_x+1, grid_height):
+      if grid[x][tree_y] < height:
+        down += 1
+      if grid[x][tree_y] >= height:
+        down += 1
+        break
+
+    sight_score = right * left * up * down
+    sight_lines.append(sight_score)
+
+  return sight_lines
+
+
 def run():
   with open('input_day8.txt') as f:
     b = f.read().splitlines()
   f.close()
 
   grid = build_grid(b)
-  #grid = build_grid(None)
-
-  # for row in grid:
-  #   print(row)
-
   trees = see_the_trees(grid)
-  print(sorted(trees))
-  print(len(trees))
+  print("trees", len(trees))
 
+  sight_lines = compute_site_lines(trees, grid)
+  print("sight lines", max(sight_lines))
 
 if __name__ == '__main__':
   run()
